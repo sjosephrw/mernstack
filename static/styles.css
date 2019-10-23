@@ -232,16 +232,19 @@ textarea {
   width: 90%;
   margin-bottom: 30px;
   margin-left: 5%;
+
 }
 
 .msg-success {
   border: 1px solid #3aa52c;
   color: #277e1b;
+  font-family: 'Dosis', sans-serif;
 }
 
 .msg-fail {
   border: 1px solid #f53535;
   color: #f16868;
+  font-family: 'Caveat', cursive;
 }
 
 
@@ -668,7 +671,7 @@ input[type="file"]{
   font-family: 'Dosis', sans-serif;
 }
 
-.form input[type="text"], input[type="password"], input[type="number"] {
+.form input[type="text"], input[type="password"], input[type="number"], input[type='email'] {
   width: 100%;
   display: block;
   padding: 10px 20px;

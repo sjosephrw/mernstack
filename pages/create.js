@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';//https://reactjs.org/docs/hooks-overview.html
+import React, { useState, useRef, useEffect } from 'react';//https://reactjs.org/docs/hooks-overview.html
 import axios from 'axios';
 import baseUrl from '../utils/baseUrl';
+import catchErrors from '../utils/catchErrors';
 
 //https://stackoverflow.com/questions/43441856/reactjs-how-to-scroll-to-an-element
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);   // General scroll to element function
@@ -18,10 +19,25 @@ function CreateProduct(){
   const [product, setProduct] = useState({INITIAL_PRODUCT});
   const [msg, setMsg] = useState({display: 'none', class: '', msg: '' });  
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   
   const myRef = useRef(null);
   const executeScroll = () => scrollToRef(myRef);//scroll to a div
   
+  //similar to componentDidUpdate, will check when ever the product obj values change,
+  //we want all the product values to be not empty
+  useEffect(() => {
+
+    const isProduct = Object.values(product).every(el => Boolean(el))//returns true or false, it will return true only if all fiedls are not empty 
+    //I am not sure why had to add !isProduct for it to work
+    !isProduct ? setDisabled(false) : setDisabled(true);
+
+  }, [product]);
+
+  function displayError(errorMsg){
+    setMsg({display: 'block', class: "msg msg-fail", msg: `Fail! ${errorMsg}.`});
+  } 
+
   //upload the image to cloudinary and get the image url, using client side code with axios
   //there is a 2nd method of uploading that is with server side code.
   //https://support.cloudinary.com/hc/en-us/articles/202521222-What-is-the-difference-between-Fill-Fit-and-Limit-scaling-modes-
@@ -74,15 +90,17 @@ function CreateProduct(){
       const payload = { name, price, description, mediaUrl }
   
       await axios.post(url, payload);
-      setLoading(false);
       // console.log(product);
-      setProduct(INITIAL_PRODUCT);
+      setProduct(INITIAL_PRODUCT);//clear the form fields
       //initial state of success or fail div
       setMsg({display: 'block', class: "msg msg-success", msg: "Success! product uploaded."});
       executeScroll();//scroll to the success or error msg div
 
     } catch (error) {
-      console.log(error);
+      console.error("handleSubmit", error, "This error!");
+      catchErrors(error, displayError);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -94,6 +112,7 @@ function CreateProduct(){
           <div className="container">
               <h2 className="title" style={{marginTop: "150px"}}>ADD PRODUCT</h2>
               
+              {/* ref enables to scroll up to this div but it's not working */}
               <div className="div-msg" ref={myRef}>
                 {message}
               </div>  
@@ -136,7 +155,7 @@ function CreateProduct(){
                   
                       <button type="submit" className="btn btn-primary btn-full-width"
                       style={{marginTop: '20px'}}
-                      disabled={loading}//disable btn and show spinner when submitting
+                      disabled={!disabled || loading}//disable btn and show spinner when submitting
                       > {isLoading} &nbsp;&nbsp;ADD PRODUCT</button>
                   </form>
             </div>

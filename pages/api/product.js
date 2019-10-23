@@ -33,6 +33,8 @@ async function handleGetRequest(req, res){
         });        
     } catch (error) {
         console.log(error);
+        res.status(500).send(`Server error! ${error}`);
+
     }   
 
 }
@@ -54,6 +56,8 @@ async function handleDeleteRequest(req, res){
         res.status(204).json({});        
     } catch (error) {
         console.log(error);
+        res.status(500).send(`Server error! ${error}`);
+
     }
 
 }
@@ -72,6 +76,7 @@ async function handlePostRequest(req, res){
 
     } catch (error) {
         console.log(error);
+        res.status(500).send(`Server error! ${error}`);
     }
 
 }

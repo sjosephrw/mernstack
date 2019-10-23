@@ -11,15 +11,24 @@ function ProductList({products}) {
     // console.log(numRows);
 
     let j = 0;
-    
+    let p, q, r;
+
     for (let i = 0; i < numRows; i++){
 
+        p = (i+(i+j+0)).toString();
+        q = (i+(i+j+1)).toString();
+        r = (i+(i+j+2)).toString();
+
         // console.log(j);
+        //index.js:1 Warning: Each child in a list should have a unique "key" so added this
+        //<div key={i.toString() + '_row'} 
+        //https://stackoverflow.com/questions/36251751/react-send-keyed-children-to-a-component-keys-always-null
+        
         list.push(
-          <div className="container flex" style={{marginBottom: "40px"}}>
-            <Product key={(i+(i+j+0))} product={products[key][(i+(i+j+0))]} />
-            <Product key={(i+(i+j+1))} product={products[key][(i+(i+j+1))]} />
-            <Product key={(i+(i+j+2))} product={products[key][(i+(i+j+2))]} />
+          <div key={i.toString() + '_row'} className="container flex" style={{marginBottom: "40px"}}>
+            <Product key={ p } product={products[key][(i+(i+j+0))]} />
+            <Product key={ q } product={products[key][(i+(i+j+1))]} />
+            <Product key={ r } product={products[key][(i+(i+j+2))]} />
           </div>
         );
         
