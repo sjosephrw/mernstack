@@ -232,19 +232,19 @@ textarea {
   width: 90%;
   margin-bottom: 30px;
   margin-left: 5%;
-
+  font-family: 'Dosis', sans-serif;
 }
 
 .msg-success {
   border: 1px solid #3aa52c;
   color: #277e1b;
-  font-family: 'Dosis', sans-serif;
+
 }
 
 .msg-fail {
   border: 1px solid #f53535;
   color: #f16868;
-  font-family: 'Caveat', cursive;
+
 }
 
 

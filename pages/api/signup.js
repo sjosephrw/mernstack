@@ -2,7 +2,9 @@ import connectDb from '../../utils/connectDb';
 import User from '../../models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
+import isEmail from 'validator/lib/isEmail';
+import isLength from 'validator/lib/isLength';
+import Cart from '../../models/Cart';
 
 connectDb();
 
@@ -10,10 +12,18 @@ export default async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        if (!name || !email || !password){
-            return res.status(422).send(`Please fill in all fields.`)
-        }
+        // if (!name || !email || !password){
+        //     return res.status(422).send(`Please fill in all fields.`)
+        // }
 
+        //Much better validation
+        if(!isLength(name, { min: 3, max: 10 })){
+            return res.status(422).send(`Name must be between 3 and 10 characters.`);
+        } else if(!isLength(password, { min: 6 })){
+            return res.status(422).send(`Password must be at least 6 characters.`);
+        } else if (!isEmail(email)){
+            return res.status(422).send(`Invalid email.`);
+        }
         //1. Check if user already exists in the DB
         const userExists = await User.findOne({email: email});
         
@@ -30,7 +40,11 @@ export default async (req, res) => {
         //4. Create JWT token for the new user
         //this is synchronous so no need to await
         const token = jwt.sign({userId: newUser._id}, process.env.JWT_SECRET, {expiresIn: '7d'});//expiry 7 days
-        //5. send the JWT back to the user
+        
+        //5. Create cart for new user
+        await new Cart({user: newUser._id }).save();
+
+        //6. send the JWT back to the user
         res.status(201).json(token);
 
     } catch (error) {

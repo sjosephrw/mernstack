@@ -2,6 +2,10 @@ import App from "next/app";
 import Layout from '../components/_App/Layout'
 import Router from 'next/router';
 import ProgressBarExample from '../components/_App/Progressbar';
+import { parseCookies, destroyCookie } from 'nookies';
+import { redirectUser } from '../utils/auth';
+import baseUrl from '../utils/baseUrl';
+import axios from 'axios';
 
 class MyApp extends App {
 //https://stackoverflow.com/questions/55624695/loading-screen-on-next-js-page-transition
@@ -26,6 +30,8 @@ class MyApp extends App {
   //the method below is declared in pages/shop.js but it can be used here out side of that component because it's
   //a static method. 
   static async getInitialProps({ Component, ctx }){
+    const { token } = parseCookies(ctx);//we can get the res and req objs. from ctx(this line of code must be placed at the very top)
+
     let pageProps = {};
 
     //first check whether the component has initial props
@@ -35,6 +41,34 @@ class MyApp extends App {
       //getInitial props but he did not elaborate on it
 
     }
+
+    if (!token){
+      //we can get the res and req objs. from ctx
+      //ctx.pathname is the current route being displayed
+      //if a not logged in user is trying to access the below routes then redirect  
+      const isProtectedRoute = ctx.pathname === '/account' || ctx.pathname === '/create';
+      if (isProtectedRoute){
+          redirectUser(ctx, '/login');//redirecting using the server
+      }
+    
+    } else {//get the users acount data
+      try {
+        const payload = { headers: { Authorization: token } }
+        const url = `${baseUrl}/api/account`;
+        const response = await axios.get(url, payload);
+        const user = response.data;
+        pageProps.user = user;//put the retreived user data on the page props.
+      } catch (error) {
+        console.error(`Error getting user`, error);
+        //1. throw out invalid token
+        destroyCookie(ctx, "token");
+
+        //2. redirect to login
+        redirectUser(ctx, '/login');//redirecting using the server
+
+      }
+    }
+
     // return {pageProps: pageProps}
     return {pageProps};//these props will be passed down to the relavent page component as properties
   }

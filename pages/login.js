@@ -2,10 +2,13 @@ import React, {useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import baseUrl from '../utils/baseUrl';
 import catchErrors from '../utils/catchErrors';
+import { handleLogin } from '../utils/auth';
+
+//https://stackoverflow.com/questions/43441856/reactjs-how-to-scroll-to-an-element
+const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);   // General scroll to element function
 
 
 const INITIAL_USER = {
-  name: '',
   email: '',
   password: ''
 }
@@ -49,17 +52,15 @@ function Login() {
       setLoading(true);
       const url = `${baseUrl}/api/login`;
   
-      const { email, password } = user;
+      const payload = { ...user }
   
-      const payload = { email, password }
-  
-      await axios.post(url, payload);
+      const response = await axios.post(url, payload);//used in handleLogin below
       // console.log(user);
       setUser(INITIAL_USER);//clear the form fields
       //initial state of success or fail div
-      setMsg({display: 'block', class: "msg msg-success", msg: "Success! You can login."});
+      setMsg({display: 'block', class: "msg msg-success", msg: "Success! Redirecting."});
       executeScroll();//scroll to the success or error msg div
-
+      handleLogin(response.data);
     } catch (error) {
       console.error("handleSubmit", error, "signup view");
       catchErrors(error, displayError);
@@ -75,6 +76,11 @@ function Login() {
     <section className="section-register-login">
     <div className="container">
             <h2 className="title" style={{marginTop: '150px'}}>Login</h2>
+           
+              {/* ref enables to scroll up to this div but it's not working */}
+              <div className="div-msg" ref={myRef}>
+                {message}
+              </div>  
 
         <div className="form">
             <form onSubmit={handleSubmit}>
