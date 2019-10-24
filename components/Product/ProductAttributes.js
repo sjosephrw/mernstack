@@ -48,7 +48,7 @@ class ProductAttributes extends Component {
         this.state = {
             showModal: false
         }
-        console.log(this.state.showModal)
+        // console.log(this.state.showModal)
 
     }
 
@@ -72,6 +72,18 @@ class ProductAttributes extends Component {
 
     render(){
 
+        const { user } = this.props;
+        // console.log(user);
+        const isRoot = user && user.role === 'root';
+        const isAdmin = user && user.role === 'admin';
+
+        const isRootOrAdmin = (isRoot || isAdmin);
+
+        // const deleteBtn = isRootOrAdmin ? 
+        // <button onClick={ ()=> {this.showModal()} } style={{marginTop: '20px'}} className="btn btn-warning btn-full-width">DELETE PRODUCT&nbsp;&nbsp;&nbsp;<i className="fas fa-trash"></i></button> 
+        // : 
+        // null;
+
         //https://alligator.io/react/modal-component/
         return (
             <section className="section-product-details">
@@ -92,7 +104,7 @@ class ProductAttributes extends Component {
                                 <h2>$ { this.props.price }</h2>
                             </div>
         
-                            <AddProductToCart productId={this.props._id}/>
+                            <AddProductToCart productId={this.props._id} user={user}/>
         
                             <div className="code-and-shipping-product-details">
                                 <p style={{marginBottom: "20px"}}>Complimentary shipping with every order</p>
@@ -100,8 +112,11 @@ class ProductAttributes extends Component {
                             </div> 
         
                             <ProductSummary description={this.props.description}/>    
-                            <button onClick={ ()=> {this.showModal()} } style={{marginTop: '20px'}} className="btn btn-warning btn-full-width">DELETE PRODUCT&nbsp;&nbsp;&nbsp;<i className="fas fa-trash"></i></button>
-        
+                            {isRootOrAdmin && <>
+                                <button onClick={ ()=> {this.showModal()} } style={{marginTop: '20px'}} className="btn btn-warning btn-full-width">DELETE PRODUCT&nbsp;&nbsp;&nbsp;<i className="fas fa-trash"></i></button> 
+
+                            </>}
+            
                         </div>
                     </div>
                 </div>

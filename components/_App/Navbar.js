@@ -21,6 +21,8 @@ class Navbar extends React.Component {
   }
   render() {
     const { showMenu } = this.state;
+    const { user } = this.props;
+    //console.log(user);
 
     return (
       <header>
@@ -31,7 +33,7 @@ class Navbar extends React.Component {
                 </a>
             </div>
             <div className="links-menu">
-              <Menu showMenu={showMenu}/>
+              <Menu showMenu={showMenu} user={user}/>
             </div>
             
             <div className="link-resp-menu"> 

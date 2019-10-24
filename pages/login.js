@@ -59,7 +59,7 @@ function Login() {
       setUser(INITIAL_USER);//clear the form fields
       //initial state of success or fail div
       setMsg({display: 'block', class: "msg msg-success", msg: "Success! Redirecting."});
-      executeScroll();//scroll to the success or error msg div
+      // executeScroll();//scroll to the success or error msg div
       handleLogin(response.data);
     } catch (error) {
       console.error("handleSubmit", error, "signup view");
@@ -75,10 +75,11 @@ function Login() {
   return (
     <section className="section-register-login">
     <div className="container">
-            <h2 className="title" style={{marginTop: '150px'}}>Login</h2>
+            <h2 className="title" ref={myRef} style={{marginTop: '150px'}}>Login</h2>
            
               {/* ref enables to scroll up to this div but it's not working */}
-              <div className="div-msg" ref={myRef}>
+              
+              <div className="div-msg">
                 {message}
               </div>  
 
@@ -100,6 +101,7 @@ function Login() {
                   />
               
                   <button type="submit" className="btn btn-primary btn-full-width"
+                  onClick={executeScroll}
                   disabled={disabled || loading}                  
                   >{isLoading} &nbsp;&nbsp;Login</button>
                 

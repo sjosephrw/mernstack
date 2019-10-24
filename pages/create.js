@@ -94,7 +94,7 @@ function CreateProduct(){
       setProduct(INITIAL_PRODUCT);//clear the form fields
       //initial state of success or fail div
       setMsg({display: 'block', class: "msg msg-success", msg: "Success! product uploaded."});
-      executeScroll();//scroll to the success or error msg div
+      // executeScroll();//scroll to the success or error msg div
 
     } catch (error) {
       console.error("handleSubmit", error, "This error!");
@@ -110,10 +110,10 @@ function CreateProduct(){
   return (
       <section className="section-register-login">
           <div className="container">
-              <h2 className="title" style={{marginTop: "150px"}}>ADD PRODUCT</h2>
+              <h2 className="title" ref={myRef} style={{marginTop: "150px"}}>ADD PRODUCT</h2>
               
               {/* ref enables to scroll up to this div but it's not working */}
-              <div className="div-msg" ref={myRef}>
+              <div className="div-msg">
                 {message}
               </div>  
               
@@ -154,6 +154,7 @@ function CreateProduct(){
                       </textarea>
                   
                       <button type="submit" className="btn btn-primary btn-full-width"
+                      onClick={executeScroll}
                       style={{marginTop: '20px'}}
                       disabled={!disabled || loading}//disable btn and show spinner when submitting
                       > {isLoading} &nbsp;&nbsp;ADD PRODUCT</button>

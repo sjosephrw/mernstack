@@ -5,7 +5,7 @@ import Header from "./Header";
 import HeadContent from "./HeadContent";
 import FooterAndCart from "./FooterAndCart";
 
-function Layout({ children }) {
+function Layout({ children, user }) {
   return (
     <>
       <Head>
@@ -23,7 +23,7 @@ function Layout({ children }) {
         <link href="https://fonts.googleapis.com/css?family=Cairo|Caveat|Dosis&display=swap" rel="stylesheet"/>        
         <title>Mern Stack E - commerce </title>
       </Head>
-      <Header />
+      <Header user={user}/>
       {/* <Container text style={{ paddingTop: "1em" }}> */}
         {children}
       {/* </Container> */}

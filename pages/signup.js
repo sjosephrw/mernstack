@@ -59,7 +59,7 @@ function Signup() {
       setUser(INITIAL_USER);//clear the form fields
       //initial state of success or fail div
       setMsg({display: 'block', class: "msg msg-success", msg: "Success! You can login."});
-      executeScroll();//scroll to the success or error msg div
+      // executeScroll();//scroll to the success or error msg div
 
       handleLogin(response.data);
     } catch (error) {
@@ -76,10 +76,10 @@ function Signup() {
   return (
     <section className="section-register-login">
         <div className="container">
-                <h2 className="title" style={{marginTop: '150px'}}>Register</h2>
+                <h2 className="title" ref={myRef} style={{marginTop: '150px'}}>Register</h2>
            
               {/* ref enables to scroll up to this div but it's not working */}
-              <div className="div-msg" ref={myRef}>
+              <div className="div-msg">
                 {message}
               </div>  
            
@@ -110,6 +110,7 @@ function Signup() {
                       <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
                   
                       <button type="submit" className="btn btn-primary btn-full-width"
+                      onClick={executeScroll}
                       disabled={disabled || loading}
                       >{isLoading} &nbsp;&nbsp;Register</button>
                     

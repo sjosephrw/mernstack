@@ -25,6 +25,19 @@ class MyApp extends App {
     Router.events.on('routeChangeStart', () => this.setState({ loaded: false }));
     Router.events.on('routeChangeComplete', () => this.setState({ loaded: true }));
  
+    //if 2 browser windows are open and we logout of 1 then we wont be logged out of the other, until we refresh the page
+    //but this prevents is and logs us out of both
+    //refer to utils/auth.js handleLogout method
+    //storage is for local storage
+    window.addEventListener('storage', this.syncLogOut);
+    
+  }
+
+  syncLogOut = (e) => {
+    if(e.key === 'logout'){//    window.localStorage.setItem('logout', Date.now()); - utils/auth.js
+      console.log('Logged out from storage.');
+      Router.push('/login')
+    }
   }
 
   //the method below is declared in pages/shop.js but it can be used here out side of that component because it's
@@ -57,6 +70,14 @@ class MyApp extends App {
         const url = `${baseUrl}/api/account`;
         const response = await axios.get(url, payload);
         const user = response.data;
+
+        const isRoot = user.role === 'root' ? true : false;
+        const isAdmin = user.role === 'admin' ? true : false;
+
+        //if the user is logged in but not a admin or root redirect from create page to homepage
+        const isNotPermitted = !(isRoot || isAdmin) && ctx.pathname === '/create';
+        if (isNotPermitted) redirectUser(ctx, '/');
+
         pageProps.user = user;//put the retreived user data on the page props.
       } catch (error) {
         console.error(`Error getting user`, error);
@@ -90,7 +111,7 @@ class MyApp extends App {
 
         <>
         
-        <Layout>
+        <Layout {...pageProps}>
           <span style={loaded ? inVisibleStyle : visibleStyle}>
           <ProgressBarExample start={true}/>
           </span>

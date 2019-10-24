@@ -12,7 +12,7 @@ export default async (req, res) => {
         try {
             const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
             const userData = await User.findOne({ _id: userId});
-            if (user) {
+            if (userData) {
                 return res.status(200).json(userData);
             } else {
                 return res.status(404).send(`User not found.`);                

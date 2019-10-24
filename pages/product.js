@@ -4,18 +4,21 @@ import baseUrl from '../utils/baseUrl';
 
 const list = [];
 
-function Product(product) {
+function Product({product, user}) {
 
-  Object.keys(product).forEach(function(key) {
-    list.push(product[key]);
+  // console.log(user)
+  // console.log(product.product.productData)
+  const prodDetails = product.product.productData;
+  // Object.keys(prodDetails).forEach(function(key) {
+  //   list.push(prodDetails[key]);
 
-  })
-  // console.log(list[0].product.name)
+  // })
+  // // console.log(list[0].product.name)
 
-  const prod = list[0].product;
+  const prod = prodDetails;
 
   return (
-    <ProductContainer {...prod}/>
+    <ProductContainer {...prod} user={user}/>
   )
 }
 

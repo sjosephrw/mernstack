@@ -27,7 +27,10 @@ async function handleGetRequest(req, res){
     try {
         const { _id } = req.query;
         //const product = await Product.findOne({ _id: _id });// - { _id: _id } also valid
-        const product = await Product.findOne({ _id });//*** */does n't actually return a promie to get a promise - Product.find.exec()
+        const productData = await Product.findOne({ _id });//*** */does n't actually return a promie to get a promise - Product.find.exec()
+        
+        const product = {productData};//had to do it this way
+        
         res.status(200).json({
             product
         });        

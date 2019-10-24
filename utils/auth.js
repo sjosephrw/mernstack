@@ -16,3 +16,11 @@ export function redirectUser(ctx, location){//redirecting using the server
         Router.push(location);
     }
 }
+
+export function handleLogOut(){
+    cookie.remove('token');
+    //if 2 browser windows are open and we logout of 1 then we wont be logged out of the other, until we refresh the page
+    //but this prevents is and logs us out of both
+    window.localStorage.setItem('logout', Date.now());//it does n't matter what we enter for the logout value we are just entering the time 
+    Router.push('/login');
+}
