@@ -16,6 +16,9 @@ export default async (req, res) => {
         case "PUT":
         await handlePutRequest(req, res);
         break;
+        case "DELETE":
+        await handleDeleteRequest(req, res);
+        break;        
         default:
         res.status(405).sned(`Method ${req.method} not allowed.`)
         break;
@@ -87,6 +90,38 @@ async function handlePutRequest(req, res){
             }
             //if not add product with given quantity
             return res.status(200).send(`Cart updated`);
+        } catch (error) {
+            console.error(error);
+            return res.status(403).send(`Invalid token.`);  
+        }
+    }     
+}
+
+async function handleDeleteRequest(req, res){
+
+    const { productId } = req.query;//because we specified the productId as a param in a query string
+
+    if (!("authorization" in req.headers)){//if the authorization object does not exist in the req.headers
+        return res.status(401).send(`No authorization token.`);
+
+    } else {
+        try {
+            const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
+
+            const cart = await Cart.findOneAndUpdate({ user: userId},
+            { $pull: { products: { product: productId } } },//$pull is to delete
+            { new: true//return the updated doc.
+            }).populate({//then populate the products once again
+                path: "products.product",
+                model: Product
+            });
+
+            console.log(cart)
+            console.log('------------------------')
+            console.log(cart.products)
+
+            //if not add product with given quantity
+            return res.status(200).json(cart.products);
         } catch (error) {
             console.error(error);
             return res.status(403).send(`Invalid token.`);  

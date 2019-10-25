@@ -1,19 +1,24 @@
-function CartItemList() {
+import { withRouter } from "next/router";
+
+function CartItemList({name, quantity, price, mediaUrl, _id, handleRemoveFromCart}) {
+
   return (
     <div className="container flex border margin-t">
     <div className="col-2">
         <div className="div-product ">
             <div className="img-product">
-                <img src="https://dummyimage.com/600x400/000/fff" alt="Product"/>
+                <img src={ mediaUrl } alt="Product"/>
             </div>
         </div>                
     </div>
     <div className="col-2">
 
         <div className="cart-info-product">
-            <p className="name-product">FISH AND CHIPS</p>
-            <p className="price-product">2 X $150.00</p>
-            <span><a href="#"><i className="fas fa-trash"></i></a></span>
+            <p className="name-product"><a href={ `/product?_id=${_id}` }>{ name }</a></p>
+            <p className="price-product">{ quantity } X ${ price }</p>
+            <span><button 
+            style={{backgroundColor: 'white', border: '0', color: '#91ce89'}}
+            onClick={ (e) => handleRemoveFromCart(e, _id) }><i className="fas fa-trash"></i></button></span>
         </div>
         
     </div>

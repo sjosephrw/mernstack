@@ -78,6 +78,12 @@ class MyApp extends App {
         const isNotPermitted = !(isRoot || isAdmin) && ctx.pathname === '/create';
         if (isNotPermitted) redirectUser(ctx, '/');
 
+        //if logged in dont permit him to access login and signup pages
+        const isNotNeededRoute = ctx.pathname === '/login' || ctx.pathname === '/signup';
+        if (isNotNeededRoute){
+          redirectUser(ctx, '/');//redirecting using the server
+        }
+
         pageProps.user = user;//put the retreived user data on the page props.
       } catch (error) {
         console.error(`Error getting user`, error);

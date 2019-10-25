@@ -1,25 +1,99 @@
+import React, { useState } from 'react';
 import CartItemList from '../components/Cart/CartItemList';
 import CartSummary from '../components/Cart/CartSummary';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
 import baseUrl from '../utils/baseUrl';
 import { useRouter } from 'next/router';
-
+import cookie from 'js-cookie';
+import catchErrors from '../utils/catchErrors';
 
 function Cart({ user, products }) {
 
-  const router = useRouter();
-        console.log(products.products);
-    //   console.log(user)
+// const { prod } = products;
 
-  const cartProds = products.products;
-
-  function mapCartProducts(prods){
-    return prods.map(prod => <CartItemList key={prod._id} sku={prod.sku}/>)
-  }  
+// console.log(products)
+  const [cartProducts, setCartProducts] = useState(products.products);
+  const [msg, setMsg] = useState({display: 'none', class: '', msg: '' }); 
+  const [loading, setLoading] = useState(false);
+ 
 
   
-  if (products.length !== 0){
+  const router = useRouter();
+//   console.log(products.products);
+//   console.log(user)
+
+//   const cartProds = products.products;
+
+//   console.log(cartProds);
+//   console.log(cartProducts);
+
+
+  function displayError(errorMsg){
+    setMsg({display: 'block', class: "msg msg-fail", msg: `Fail! ${errorMsg}.`});
+  } 
+
+  async function handleRemoveFromCart(e, productId){
+
+    e.preventDefault();
+    
+    const url = `${baseUrl}/api/cart`;
+    const token = cookie.get('token');
+    const payload = {
+        params: {//because the productId is being passed as params we will have to get it in the end point as req.query;
+            productId
+        },
+        headers: {
+            Authorization: token
+        }
+    }
+    const response = await axios.delete(url, payload);
+    console.log(response.data);
+    setCartProducts(response.data);
+
+  }
+
+  async function handleCheckout(paymentData){
+    try {
+        setLoading(true);
+        const url = `${baseUrl}/api/checkout`;
+        const token = cookie.get('token');
+        const payload = { paymentData }
+        const headers = {
+            headers: { Authorization: token }
+        }
+
+        await axios.post(url, payload, headers);
+
+        setMsg({display: 'block', class: "msg msg-success", msg: "Success! payment received."});
+
+    } catch (error) {
+        console.error(error);
+        catchErrors(error, displayError);
+    } finally {
+        setLoading(false);
+    }
+  }
+
+
+  
+  function mapCartProducts(prods){
+      if (prods.length !== 0){
+        return prods.map(prod => <CartItemList 
+            key={prod._id} 
+            quantity={prod.quantity} 
+            {...prod.product} 
+            handleRemoveFromCart={handleRemoveFromCart}/>)
+      } else {
+          return null;
+      }
+
+  }  
+
+  const message = msg.display === 'block' ? <div className={msg.class}>{msg.msg}</div> : null;
+
+  
+  if (cartProducts.length !== 0){
     return (
         <section className="section-cart-data">
         <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
@@ -57,20 +131,37 @@ function Cart({ user, products }) {
                     <button className="btn btn-primary btn-full-width">PAY: $2000.00</button>
                 </div>
             </div>        */}
-            {mapCartProducts(cartProds)}
+            {/* {mapCartProducts(cartProds)}
+            <CartSummary products={cartProds}/> */}
+            {mapCartProducts(cartProducts)}
+            <CartSummary products={cartProducts} handleCheckout={handleCheckout} />
+            {console.log(cartProducts)}
+
+
     </section>    
       );
-  } else {
-    return (<>
+
+  } else if (loading){   
+    return (
+        <section className="section-cart-data">
+            <div className="container" style={{textAlign: 'center', fontSize: '400%'}}>
+            <i className="fas fa-spinner fa-spin"></i>
+            </div>
+        </section>
+    )
+  } else if (cartProducts.length === 0){
+    return (
         <section className="section-cart-data">
         <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
-        
+            <div className="div-msg">
+                {message}
+            </div>  
         
         <div className="div-msg">
             <div className="msg msg-fail">TO <a onClick={() => router.push('/shop')}> SHOP</a> PAGE.</div>
         </div>
         </section>
-          </>)      
+          )      
   }    
 
 }
