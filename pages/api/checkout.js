@@ -10,8 +10,8 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async (req, res) => {
     const { paymentData } = req.body;
-    console.log('__________________________')
-    console.log(paymentData);
+    // console.log('__________________________')
+    // console.log(paymentData);
 
     if (!("authorization" in req.headers)){//if the authorization object does not exist in the req.headers
         return res.status(401).send(`No authorization token.`);
@@ -26,7 +26,7 @@ export default async (req, res) => {
             const cart = await Cart.findOne({ user: userId }).populate({//then populate the products once again
                 path: "products.product",
                 model: Product
-            });;
+            });
             //3. calculate cart totals again from cart products
             const totals = calculateCartTotal(cart.products);
             const cartTotal = totals[0];
@@ -37,6 +37,7 @@ export default async (req, res) => {
                 limit: 1
             })
 
+            console.log('-----------------------------')
             console.log(prevCustomer);
 
             //5. if they are not existing customers create them based on their email.
@@ -65,10 +66,13 @@ export default async (req, res) => {
                 })
             }
 
-            console.log(prevCustomer.data[0].id);
-            console.log('???????????????????????????');
-            // console.log(newCustomer);
+            console.log('-----------------------------')
             console.log(customer);
+            //return;
+            // console.log(prevCustomer.data[0].id);
+            // console.log('???????????????????????????');
+            // // console.log(newCustomer);
+            // console.log(customer);
             //6. create charge with total, send receipt email
             const charge = await stripe.charges.create({
                 currency: "usd",

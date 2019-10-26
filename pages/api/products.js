@@ -4,7 +4,7 @@ import Product from '../../models/Product';
 
 connectDb();//************ */just execute it like this to connect to db
 
-export default async (req, res, next) => {
+export default async (req, res) => {
     // console.log(req);
     // console.log(req.method);//useful to filter out methods that are not valid
     // res.status(200).send('some string value');//to send back a string response.

@@ -180,7 +180,7 @@ function Cart({ user, products }) {
     const url = `${baseUrl}/api/cart`
     const payload = {headers: { Authorization: token } }
     const response = await axios.get(url, payload);
-    return {products: response.data};
+    return { products: response.data };
     //and return the data as an object
 
     //this obj. will be merged with existing props, it wont overide the other props
