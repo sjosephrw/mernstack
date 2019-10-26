@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CartItemList from '../components/Cart/CartItemList';
 import CartSummary from '../components/Cart/CartSummary';
 import { parseCookies } from 'nookies';
 import axios from 'axios';
 import baseUrl from '../utils/baseUrl';
-import { useRouter } from 'next/router';
 import cookie from 'js-cookie';
 import catchErrors from '../utils/catchErrors';
 
@@ -17,9 +16,7 @@ function Cart({ user, products }) {
   const [msg, setMsg] = useState({display: 'none', class: '', msg: '' }); 
   const [loading, setLoading] = useState(false);
  
-
   
-  const router = useRouter();
 //   console.log(products.products);
 //   console.log(user)
 
@@ -27,6 +24,12 @@ function Cart({ user, products }) {
 
 //   console.log(cartProds);
 //   console.log(cartProducts);
+
+//   useEffect(() => {
+
+//     setLoading(true);
+
+//   }, [cartProducts]);
 
 
   function displayError(errorMsg){
@@ -63,8 +66,11 @@ function Cart({ user, products }) {
             headers: { Authorization: token }
         }
 
-        await axios.post(url, payload, headers);
+        const response = await axios.post(url, payload, headers);
 
+        console.log(response.data);
+        setCartProducts(response.data);
+        
         setMsg({display: 'block', class: "msg msg-success", msg: "Success! payment received."});
 
     } catch (error) {
@@ -92,77 +98,72 @@ function Cart({ user, products }) {
 
   const message = msg.display === 'block' ? <div className={msg.class}>{msg.msg}</div> : null;
 
-  
-  if (cartProducts.length !== 0){
-    return (
+  if (!user){
+      return (
         <section className="section-cart-data">
-        <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
-        
-        {!user && <> 
-        <div className="div-msg">
-            <div className="msg msg-fail"><a href="/login">Login</a> to add products to your cart.</div>
-        </div></>}
-        
+            <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
 
-    
-        {/* <div className="container flex border margin-t">
-                <div className="col-2">
-                    <div className="div-product ">
-                        <div className="img-product">
-                            <img src="https://dummyimage.com/600x400/000/fff" alt="Product"/>
-                        </div>
-                    </div>                
-                </div>
-                <div className="col-2">
-    
-                    <div className="cart-info-product">
-                        <p className="name-product">FISH AND CHIPS</p>
-                        <p className="price-product">2 X $150.00</p>
-                        <span><a href="#"><i className="fas fa-trash"></i></a></span>
-                    </div>
-                    
-                </div>
-            </div> 
-            <div className="container flex">
-                <div className="checkout">
-                    <h3>
-                        CHECKOUT
-                    </h3>
-                    <button className="btn btn-primary btn-full-width">PAY: $2000.00</button>
-                </div>
-            </div>        */}
-            {/* {mapCartProducts(cartProds)}
-            <CartSummary products={cartProds}/> */}
-            {mapCartProducts(cartProducts)}
-            <CartSummary products={cartProducts} handleCheckout={handleCheckout} />
-            {console.log(cartProducts)}
-
-
-    </section>    
-      );
-
-  } else if (loading){   
-    return (
-        <section className="section-cart-data">
-            <div className="container" style={{textAlign: 'center', fontSize: '400%'}}>
-            <i className="fas fa-spinner fa-spin"></i>
+                <div className="div-msg">
+                    {message}
+                </div>  
+            
+            <div className="div-msg">
+                <div className="msg msg-fail"><a href="/login">Login</a> to add products to your cart.</div>
             </div>
         </section>
-    )
-  } else if (cartProducts.length === 0){
+      ) 
+  } else if (cartProducts !== undefined){
+      
+      if (cartProducts.length === 0){
+        
+        return (
+            <section className="section-cart-data">
+                <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
+                    <div className="div-msg">
+                        {message}
+                    </div>  
+                
+                <div className="div-msg">
+                    <div className="msg msg-fail"> <a href="/shop"> BACK TO SHOP PAGE.</a></div>
+                </div>
+            </section>
+        ) 
+
+      } else if (loading){       
+        return (
+            <section className="section-cart-data">
+                <div className="container" style={{textAlign: 'center', fontSize: '500%', margin: '15% 15%'}}>
+                <i className="fas fa-spinner fa-spin"></i>
+                </div>
+            </section>
+        )
+      } else {
+
+        return (
+            <section className="section-cart-data">
+                <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
+                {mapCartProducts(cartProducts)}
+                <CartSummary products={cartProducts} handleCheckout={handleCheckout} />
+                {console.log(cartProducts)}
+            </section>    
+        );
+      }
+
+
+  } else if (cartProducts === undefined){
     return (
         <section className="section-cart-data">
-        <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
+            <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
+                <div className="div-msg">
+                    {message}
+                </div>  
+            
             <div className="div-msg">
-                {message}
-            </div>  
-        
-        <div className="div-msg">
-            <div className="msg msg-fail">TO <a onClick={() => router.push('/shop')}> SHOP</a> PAGE.</div>
-        </div>
+                <div className="msg msg-fail"> <a href="/shop"> BACK TO SHOP PAGE.</a></div>
+            </div>
         </section>
-          )      
-  }    
+    )      
+  }  
 
 }
 

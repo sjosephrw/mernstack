@@ -39,7 +39,7 @@ export default async (req, res) => {
                 model: Product
             });
 
-            console.log(userCartData);
+            // console.log(userCartData);
             
             if (userCartData) {
                 return res.status(200).json(userCartData);
@@ -116,9 +116,9 @@ async function handleDeleteRequest(req, res){
                 model: Product
             });
 
-            console.log(cart)
-            console.log('------------------------')
-            console.log(cart.products)
+            // console.log(cart)
+            // console.log('------------------------')
+            // console.log(cart.products)
 
             //if not add product with given quantity
             return res.status(200).json(cart.products);

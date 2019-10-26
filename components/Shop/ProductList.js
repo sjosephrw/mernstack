@@ -5,8 +5,9 @@ function ProductList({products}) {
   const list = [];
 
   //https://stackoverflow.com/questions/44309300/iterating-over-json-in-react  
-  Object.keys(products).forEach(function(key) {
-    const num = products[key].length/3;
+  // Object.keys(products).forEach(function(key) {
+    // const num = products[key].length/3;
+    const num = products.length/3;
     const numRows = Math.ceil(num);
     // console.log(numRows);
 
@@ -26,9 +27,9 @@ function ProductList({products}) {
         
         list.push(
           <div key={i.toString() + '_row'} className="container flex" style={{marginBottom: "40px"}}>
-            <Product key={ p } product={products[key][(i+(i+j+0))]} />
-            <Product key={ q } product={products[key][(i+(i+j+1))]} />
-            <Product key={ r } product={products[key][(i+(i+j+2))]} />
+            <Product key={ p } product={products[(i+(i+j+0))]} />
+            <Product key={ q } product={products[(i+(i+j+1))]} />
+            <Product key={ r } product={products[(i+(i+j+2))]} />
           </div>
         );
         
@@ -38,8 +39,8 @@ function ProductList({products}) {
         // console.log(i+(i+j+2))
         j = j + 1;
       }  
-      console.log(list);  
-  });
+      // console.log(list);  
+  // });
 
   return (list);
 

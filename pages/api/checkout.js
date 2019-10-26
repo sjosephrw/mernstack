@@ -1,14 +1,17 @@
 import Stripe from 'stripe';
 import uuidv4 from 'uuid/v4';
 import jwt from 'jsonwebtoken';
+import Product from '../../models/Product';
 import Cart from '../../models/Cart';
 import Order from '../../models/Order';
 import calculateCartTotal from '../../utils/calculateCartTotal';
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-export default async = (req, res) => {
+export default async (req, res) => {
     const { paymentData } = req.body;
+    console.log('__________________________')
+    console.log(paymentData);
 
     if (!("authorization" in req.headers)){//if the authorization object does not exist in the req.headers
         return res.status(401).send(`No authorization token.`);
@@ -33,18 +36,39 @@ export default async = (req, res) => {
                 email: paymentData.email,
                 limit: 1
             })
+
+            console.log(prevCustomer);
+
             //5. if they are not existing customers create them based on their email.
             const existingCustomer = prevCustomer.data.length > 0;
-            let newCustomer;
-            if (!existingCustomer){
-                const newCustomer = await stripe.customers.create({
+            // let newCustomer;
+
+            // console.log(existingCustomer);
+            
+            // if (!existingCustomer){
+            //     newCustomer = await stripe.customers.create({
+            //         email: paymentData.email,
+            //         source: paymentData.id
+            //     })
+            // }
+
+            // const customer = (existingCustomer && prevCustomer.data[0].id) || newCustomer.id;
+            
+            let customer;
+
+            if (existingCustomer) {
+                customer = prevCustomer.data[0].id;
+            } else {
+                customer = await stripe.customers.create({
                     email: paymentData.email,
                     source: paymentData.id
                 })
             }
 
-            const customer = (existingCustomer && prevCustomer.data[0].id) || newCustomer.id;
-
+            console.log(prevCustomer.data[0].id);
+            console.log('???????????????????????????');
+            // console.log(newCustomer);
+            console.log(customer);
             //6. create charge with total, send receipt email
             const charge = await stripe.charges.create({
                 currency: "usd",
@@ -63,12 +87,20 @@ export default async = (req, res) => {
                 products: cart.products
             }).save();
             //8. clear products in Cart
-            await Cart.findOneAndUpdate(
+            const emptyCart = await Cart.findOneAndUpdate(
                 { _id: cart._id },
-                { $set: { products: [] } }
+                { $set: { products: [] } },
+                { new: true//return the updated doc.
+                }
             );
+
+             console.log('++++++++++++++++++')
+             console.log(emptyCart);   
+
             //9. send back status 200 response.
-            res.status(200).send(`Checkout Successful!`);
+            // res.status(200).send(`Checkout Successful!`);
+            res.status(200).json(emptyCart.products);
+
             
         } catch (error) {
             console.error(error);
