@@ -14,10 +14,7 @@ function AccountPermissions() {
   const panel = showPanel ?
   <div className="panel-data" id="users">
     <ul className="list-data">
-      <li><input type="checkbox" name="role"/> : peter@gmail.com</li>
-      <li><input type="checkbox" name="role"/> : peter@gmail.com</li>
-      <li><input type="checkbox" name="role"/> : peter@gmail.com</li>
-      <li><input type="checkbox" name="role"/> : peter@gmail.com</li>
+      <li><a href="/users">MANAGE USERS</a></li>
     </ul>
   </div>  
     :
