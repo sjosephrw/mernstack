@@ -1,4 +1,4 @@
-function AccountHeader({user}) {
+function AccountHeader({user, accountFeature}) {
   return (
 
         <div className="jumbotron">
@@ -7,6 +7,7 @@ function AccountHeader({user}) {
                 <h3>{user.name}</h3>
                 <p>Welcome [{user.role}] : {user.email}</p>
                 <p>Joined: {user.createdAt}</p>
+                <p>{accountFeature}</p>
             </div>
         </div>
 

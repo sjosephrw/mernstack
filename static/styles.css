@@ -763,6 +763,86 @@ input[type="file"]{
 
 /***********************************************/
 
+
+/***********************************************/
+
+/*              my-orders start                */
+
+/***********************************************/
+
+.orders {
+  list-style: none;
+  width: 100%;
+  font-family: 'Dosis', sans-serif;
+}
+
+.orders li {
+  margin: 40px 0;
+  border: 1px dotted black;
+  border-radius: 2px;
+}
+
+.orders li a {
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  background-color: #fcf8f8;
+  color: black;
+}
+
+.orders li a:hover {
+  background-color: #888888;
+  color: white;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+/***********************************************/
+
+/*              my-orders end                  */
+
+/***********************************************/
+
+
+/***********************************************/
+
+/*              order    start                 */
+
+/***********************************************/
+
+.order {
+  padding: 40px 10px;
+  font-family: 'Dosis', sans-serif;
+
+} 
+
+.order ul li {
+  margin-bottom: 30px;
+}
+
+.order ul {
+  padding-left: 30px;
+} 
+
+.order ul li:first-child {
+  margin-top: 20px;
+}
+
+.img-order-product {
+  width: 100%;
+  height: auto;
+}
+
+.img-order-product img {
+  width: 50%;
+  height: auto;
+}
+
+/***********************************************/
+
+/*              order end                      */
+
+/***********************************************/
+
 /***********************************************/
 
 /*                   footer                    */
