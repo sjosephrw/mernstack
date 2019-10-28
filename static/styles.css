@@ -311,6 +311,18 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+.span-msg {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.msg-success-span {
+  color: green;
+}
+
+.msg-fail-span {
+  color: rgb(128, 15, 0);
+}
 /* <!--
 font-family: 'Dosis', sans-serif;
 font-family: 'Cairo', sans-serif;

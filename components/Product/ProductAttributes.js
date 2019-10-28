@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AddProductToCart from "./AddProductToCart";
 import ProductSummary from './ProductSummary';
 import NewModal from './NewModal';
-
+import Router from "next/router";
 
 // function ProductAttributes({name, price, mediaUrl, sku, description, _id}) {
 
@@ -114,6 +114,7 @@ class ProductAttributes extends Component {
                             <ProductSummary description={this.props.description}/>    
                             {isRootOrAdmin && <>
                                 <button onClick={ ()=> {this.showModal()} } style={{marginTop: '20px'}} className="btn btn-warning btn-full-width">DELETE PRODUCT&nbsp;&nbsp;&nbsp;<i className="fas fa-trash"></i></button> 
+                                <button onClick={ ()=> {Router.push(`/edit?_id=${this.props._id}`)} } style={{marginTop: '20px'}} className="btn btn-primary btn-full-width">EDIT PRODUCT&nbsp;&nbsp;&nbsp;<i class="fas fa-edit"></i></button> 
 
                             </>}
             

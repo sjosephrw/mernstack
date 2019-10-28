@@ -2,7 +2,7 @@ import AccountHeader from '../components/Account/AccountHeader';
 import { parseCookies } from 'nookies';
 import baseUrl from '../utils/baseUrl';
 import axios from 'axios';
-
+import formatDate from '../utils/formatDate';
 
 function Order({ user, order }) {
 
@@ -27,7 +27,7 @@ function Order({ user, order }) {
                     <li><i className="fas fa-box-open"></i> - {order.orders[0]._id}</li>
                     <li><i className="fas fa-at"></i> - {order.orders[0].email}</li>
                     <li><i className="fas fa-dollar-sign"></i> - {order.orders[0].total}</li>
-                    <li><i className="far fa-clock"></i> - {order.orders[0].createdAt}</li>                    
+                    <li><i className="far fa-clock"></i> - {formatDate(order.orders[0].createdAt)}</li>                    
                     <li>
                         ORDER DETAILS
                      </li>

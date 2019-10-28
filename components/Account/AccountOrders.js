@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AccountOrders() {
+function AccountOrders({user}) {
 
   const [showPanel, setShowPanel] = useState(false);
 
@@ -8,12 +8,19 @@ function AccountOrders() {
     showPanel ? setShowPanel(false) : setShowPanel(true);
   }
 
+  const orderLinks = user.role === 'admin' || user.role === 'root' ? 
+  <ul className="list-data">
+  <li><a href="/my-orders"><i className="fab fa-stripe"></i>&nbsp;&nbsp;MY ORDERS</a></li>
+  <li><a href="/orders"><i className="fas fa-money-bill-wave"></i>&nbsp;&nbsp;ORDERS</a></li>
+  </ul>
+  :
+  <ul className="list-data">
+  <li><a href="/my-orders"><i className="fab fa-stripe"></i>&nbsp;&nbsp;MY ORDERS</a></li>
+  </ul>
+
   const panel = showPanel ?
   <div className="panel-data" id="orders">
-    <ul className="list-data">
-        <li><a href="/my-orders"><i className="fab fa-stripe"></i>&nbsp;&nbsp;MY ORDERS</a></li>
-        <li><a href="/orders"><i className="fas fa-money-bill-wave"></i>&nbsp;&nbsp;ORDERS</a></li>
-    </ul>
+    {orderLinks}
   </div>
     :
     null;

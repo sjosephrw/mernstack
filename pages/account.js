@@ -9,9 +9,9 @@ function Account({ user }) {
       <AccountHeader user={user} accountFeature={'ORDERS'}/>
 
       <div className="container" id="event-bubbling">
-        <AccountOrders/>
-        <AccountPermissions/>
-        <AccountActions/>
+        <AccountOrders user={user}/>
+        <AccountPermissions user={user}/>
+        <AccountActions user={user}/>
       </div>
     </section>
   );

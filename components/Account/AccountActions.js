@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-function AccountActions() {
+function AccountActions({user}) {
+
+  console.log(user)
 
     const [showPanel, setShowPanel] = useState(false);
 
@@ -10,10 +12,19 @@ function AccountActions() {
   
     // console.log(showPanel);    
 
+    const actionLinks = (user.role === 'admin' || user.role === 'root') ? 
+    <ul className="list-data">
+      <li><a href="/create">Manage Products</a></li>
+    </ul>
+    :
+    <ul className="list-data">
+    <li>ADMIN AND ROOT ONLY</li>
+    </ul>
+
     const panel = showPanel ?
     <div className="panel-data" id="actions">
     <ul className="list-data">
-        <li><a href="/create">Manage Products</a></li>
+      {actionLinks}
     </ul>
     </div> 
       :

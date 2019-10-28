@@ -39,7 +39,7 @@ export default async (req, res) => {
         console.log(newUser);
         //4. Create JWT token for the new user
         //this is synchronous so no need to await
-        const token = jwt.sign({userId: newUser._id}, process.env.JWT_SECRET, {expiresIn: '7d'});//expiry 7 days
+        const token = jwt.sign({userId: newUser._id, role: newUser.role}, process.env.JWT_SECRET, {expiresIn: '7d'});//expiry 7 days
         
         //5. Create cart for new user
         await new Cart({user: newUser._id }).save();

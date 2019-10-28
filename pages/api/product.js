@@ -1,5 +1,7 @@
 import connectDb from '../../utils/connectDb';
 import Product from '../../models/Product';
+import Cart from '../../models/Cart';
+
 
 connectDb();//************ */just execute it like this to connect to db
 
@@ -12,6 +14,9 @@ export default async (req, res) => {
         case "POST":
         await handlePostRequest(req, res);
         break;
+        case "PUT":
+        await handlePutRequest(req, res);
+        break;        
         case "DELETE":
         console.log(req.query._id);
         await handleDeleteRequest(req, res);
@@ -56,6 +61,13 @@ async function handleDeleteRequest(req, res){
         //const product = await Product.findOne({ _id: _id });// - { _id: _id } also valid
         await Product.findOneAndDelete({ _id });//*** */does n't actually return a promie to get a promise - Product.find.exec()
     
+        //remove product from all shopping carts if it has been added to it 
+        //CASCADE  DELETE UPON DOCUMNET REMOVAL 
+        await Cart.updateMany(
+            { "products.product": _id },
+            { $pull: { products: { product: _id } } }
+        );
+
         res.status(204).json({});        
     } catch (error) {
         console.log(error);
@@ -75,6 +87,33 @@ async function handlePostRequest(req, res){
         }
 
         const product = await new Product({name, price, description, mediaUrl}).save();//*** */does n't actually return a promie to get a promise - Product.find.exec()    
+        res.status(201).json(product);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(`Server error! ${error}`);
+    }
+
+}
+
+
+async function handlePutRequest(req, res){
+    try {
+        const {_id, name, price, description, mediaUrl} = req.body;
+
+        if (!name || !price || !description){
+            return res.status(422).send(`Name price and descriptiion are mandatory.`)
+        }
+
+        let product;
+
+        //in our case the image field can be blank
+        if (mediaUrl){
+            product = await Product.findOneAndUpdate({_id: _id}, {$set: {name, price, description, mediaUrl}});//*** */does n't actually return a promie to get a promise - Product.find.exec()    
+        } else {//if not changing the image 
+            product = await Product.findOneAndUpdate({_id: _id}, {$set: {name, price, description}});//*** */does n't actually return a promie to get a promise - Product.find.exec()    
+        }
+
         res.status(201).json(product);
 
     } catch (error) {

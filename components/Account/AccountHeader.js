@@ -1,3 +1,5 @@
+import formatDate from '../../utils/formatDate';
+
 function AccountHeader({user, accountFeature}) {
   return (
 
@@ -6,7 +8,7 @@ function AccountHeader({user, accountFeature}) {
                 <h1>My Account</h1>
                 <h3>{user.name}</h3>
                 <p>Welcome [{user.role}] : {user.email}</p>
-                <p>Joined: {user.createdAt}</p>
+                <p>Joined: {formatDate(user.createdAt)}</p>
                 <p>{accountFeature}</p>
             </div>
         </div>

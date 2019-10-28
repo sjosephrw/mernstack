@@ -1,43 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AccountHeader from '../components/Account/AccountHeader';
 import { parseCookies } from 'nookies';
 import baseUrl from '../utils/baseUrl';
 import axios from 'axios';
-import catchErrors from '../utils/catchErrors';
-import cookie from 'js-cookie';
+import UsersList from '../components/Account/UsersList';
 
 function Users({ user, users }) {
-
-    const [checkedItems, setCheckedItems] = useState({}); //plain object as state
-    const [msg, setMsg] = useState({display: 'none', class: '', msg: '' });  
-
-    function handleChangePermission(event){
-      setCheckedItems({...checkedItems, [event.target.name] : event.target.checked });
-      //console.log("checkedItems: ", checkedItems);
-      updateUserPermission(event)
-    }
-
-    async function updateUserPermission(event){
-
-        try {
-            console.log(event.target.value);
-            const url = `${baseUrl}/api/account`;
-            const role = event.target.checked ? 'admin' : 'user';
-            console.log(role);
-            const token = cookie.get('token');
-            const headers = {headers: { Authorization: token } }
-            const payload = {_id: event.target.value, role: role};
-            await axios.put(url, payload, headers);
-            setMsg({display: 'block', class: "msg msg-success", msg: "Success! User updated."});            
-        } catch (error) {
-            console.error(error);
-            catchErrors(error, displayError);
-        } 
-    }
-
-    function displayError(errorMsg){
-        setMsg({display: 'block', class: "msg msg-fail", msg: `Fail! ${errorMsg}.`});
-    } 
 
     const list = [];
 
@@ -45,26 +13,15 @@ function Users({ user, users }) {
     
     users.map((el, i)  => {
         list.push(
-        <li style={{ padding: "10px 20px" }} key={i}>
-            <label className="switch">
-            <input type="checkbox" name={el.email} value={el._id} onChange={(e) => {handleChangePermission(e)}}  checked={checkedItems[el.name] && users.role === 'admin'}/>{/* if it is a admin checked will be true */}
-            <span className="slider"></span>
-            </label><span style={{ verticalAlign: 'bottom' }}>&nbsp;&nbsp;&nbsp;{el.email}</span>
-        </li> 
+          <UsersList user={el} key={i}/>
         );
     });
 
     const usersList = list.length > 0 ? list : null;
-    const message = msg.display === 'block' ? <div className={msg.class}>{msg.msg}</div> : null;
 
   return (
     <section className="section-my-account">
-      <AccountHeader user={user} accountFeature={'ORDERS'}/>
-            
-        <div className="div-msg" style={{marginTop: '30px'}}>
-            {message}
-        </div> 
-
+      <AccountHeader user={user} accountFeature={'MANAGE USERS'}/>             
         <div className="container">
             <ul className="orders">
                 {usersList}

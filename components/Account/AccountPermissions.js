@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AccountPermissions() {
+function AccountPermissions({user}) {
 
 
   const [showPanel, setShowPanel] = useState(false);
@@ -11,10 +11,19 @@ function AccountPermissions() {
 
   // console.log(showPanel);
 
+  const userLinks = (user.role === 'admin' || user.role === 'root') ? 
+  <ul className="list-data">
+      <li><a href="/users">MANAGE USERS</a></li>
+  </ul>
+  :
+  <ul className="list-data">
+  <li>ADMIN AND ROOT ONLY</li>
+  </ul>
+
   const panel = showPanel ?
   <div className="panel-data" id="users">
     <ul className="list-data">
-      <li><a href="/users">MANAGE USERS</a></li>
+      {userLinks}
     </ul>
   </div>  
     :

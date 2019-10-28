@@ -32,7 +32,7 @@ export default async (req, res) => {
         if (passwordsMatch){
             //Create JWT token for the new user
             //this is synchronous so no need to await
-            const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});//expiry 7 days
+            const token = jwt.sign({userId: user._id, role: user.role}, process.env.JWT_SECRET, {expiresIn: '7d'});//expiry 7 days
             //5. send the JWT back to the user
             res.status(200).json(token);
         } else {

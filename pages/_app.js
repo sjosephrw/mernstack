@@ -75,7 +75,8 @@ class MyApp extends App {
         const isAdmin = user.role === 'admin' ? true : false;
 
         //if the user is logged in but not a admin or root redirect from create page to homepage
-        const isNotPermitted = !(isRoot || isAdmin) && ctx.pathname === '/create';
+        const isNotPermitted = !(isRoot || isAdmin) && 
+        (ctx.pathname === '/create' || ctx.pathname === '/edit' || ctx.pathname === '/users');
         if (isNotPermitted) redirectUser(ctx, '/');
 
         //if logged in dont permit him to access login and signup pages
