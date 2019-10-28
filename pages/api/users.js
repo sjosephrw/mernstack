@@ -5,14 +5,16 @@ import connectDb from '../../utils/connectDb';
 connectDb();
 
 export default async (req, res) => {
-    console.log(req);
+    //console.log(req);
     try {
       const { userId } = jwt.verify(
         req.headers.authorization,
         process.env.JWT_SECRET
       );
       
-      const users = await User.find({ _id: { $ne: userId } }).sort({
+      //https://docs.mongodb.com/manual/reference/operator/query/and/
+      //exclude the root user role and the currently logged in user from the results.
+      const users = await User.find({$and: [{ _id: { $ne: userId } }, {role: { $ne: 'root' }}]}).sort({
         role: "asc"
       });
 

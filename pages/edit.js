@@ -84,19 +84,17 @@ function EditProduct({prod}){
       
       e.preventDefault();
       setLoading(true);
-      const mediaUrl = await handleImageUpload();
-      console.log(mediaUrl);
-  
+      const mediaUrl = await handleImageUpload();  
       const url = `${baseUrl}/api/product`;
   
-      const { name, price, description } = product;
+      const { _id, name, price, description } = product;
   
       let payload;
         
       if (mediaUrl){
-        payload = { name, price, description, mediaUrl }
+        payload = { _id, name, price, description, mediaUrl }
       } else {
-        payload = { name, price, description } 
+        payload = { _id, name, price, description } 
       }
 
       await axios.put(url, payload);

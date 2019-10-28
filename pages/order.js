@@ -10,11 +10,12 @@ function Order({ user, order }) {
 
     const list = [];
 
-    order.orders[0].products.map((el, i)  => {
-        list.push(<ul key={i}><li>PRODUCT ID: {el._id} </li><li>QUANTITY: {el.quantity}</li><li><div className="img-order-product"><img src={el.product.mediaUrl} alt="product"/></div></li></ul>);
-    });
+      order.orders[0].products.map((el, i)  => {
+        list.push(<ul key={i}><li>PRODUCT ID: {el.product._id} </li><li>QUANTITY: {el.quantity}</li><li><div className="img-order-product"><img src={el.product.mediaUrl} alt="product"/></div></li></ul>);
+      });
 
     const orderDetails = list.length > 0 ? list : null;
+   
 
   return (
     <section className="section-my-account">
@@ -23,7 +24,7 @@ function Order({ user, order }) {
       <div className="container">
       <div className="order">
                 <ul>
-                    <li><i className="fas fa-user"></i> - {user.name}</li>
+                    <li><i className="fas fa-user"></i> - {order.orders[0].user.name}</li>
                     <li><i className="fas fa-box-open"></i> - {order.orders[0]._id}</li>
                     <li><i className="fas fa-at"></i> - {order.orders[0].email}</li>
                     <li><i className="fas fa-dollar-sign"></i> - {order.orders[0].total}</li>

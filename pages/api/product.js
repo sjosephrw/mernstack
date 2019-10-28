@@ -101,6 +101,9 @@ async function handlePutRequest(req, res){
     try {
         const {_id, name, price, description, mediaUrl} = req.body;
 
+        console.log('++++++++++++++++++++++++++??')
+        console.log(req.body);
+
         if (!name || !price || !description){
             return res.status(422).send(`Name price and descriptiion are mandatory.`)
         }
@@ -109,10 +112,13 @@ async function handlePutRequest(req, res){
 
         //in our case the image field can be blank
         if (mediaUrl){
-            product = await Product.findOneAndUpdate({_id: _id}, {$set: {name, price, description, mediaUrl}});//*** */does n't actually return a promie to get a promise - Product.find.exec()    
+            //{new: true } - to return the new doc.
+            product = await Product.findOneAndUpdate({_id: _id}, {$set: {name, price, description, mediaUrl}}, {new: true});//*** */does n't actually return a promie to get a promise - Product.find.exec()    
         } else {//if not changing the image 
-            product = await Product.findOneAndUpdate({_id: _id}, {$set: {name, price, description}});//*** */does n't actually return a promie to get a promise - Product.find.exec()    
+            product = await Product.findOneAndUpdate({_id: _id}, {$set: {name, price, description}}, {new: true});//*** */does n't actually return a promie to get a promise - Product.find.exec()    
         }
+        console.log('________________________')
+        console.log(product);
 
         res.status(201).json(product);
 
