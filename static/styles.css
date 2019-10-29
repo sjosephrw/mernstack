@@ -552,7 +552,10 @@ nav a {
 }
 
 .img-product img {
+  /*https://stackoverflow.com/questions/11757537/css-image-size-how-to-fill-not-stretch*/
+  object-fit: cover;/*to make it fill and not stretch*/
   width: 100%;
+  height: 150px;
 }
 
 .div-info-product {
@@ -652,8 +655,10 @@ input[type="text"], input[type="number"]{
 input[type="text"]:focus{
   border-radius: 2px;
   border: 1px solid rgba(85, 245, 85, 0.623);
-  background-color: #459e1bfa;
+  background-color: #4adb07fa;
+  color: white;
 }
+
 
 input[type="file"]{
   padding: 10px 20px;
@@ -918,6 +923,56 @@ input[type="file"]{
 
 /***********************************************/
 
+/***********************************************/
+
+/*              search start                   */
+
+/***********************************************/
+
+.search-field {
+  padding: 20px 40px !important;   
+}
+
+.list-search {
+  list-style: none;
+}
+
+.list-search li {
+  margin-bottom: 10px;
+}
+
+.search-item {
+  width: 100%;
+  background-color: #dadada !important;
+  border-radius: 2px;
+  padding: 15px 0 5px 0;
+}
+
+.div-img-search, .div-item-search {
+  width: 50%;
+  float: left;
+}
+
+.div-item-search {
+  padding-top: 5px;
+}
+
+.div-img-search {
+  padding-right: 5%;
+  text-align: right;
+}
+
+.div-img-search img {
+
+  height: auto;
+  max-width: 50px !important;
+}
+
+/***********************************************/
+
+/*              search end                     */
+
+/***********************************************/
 /***********************************************/
 
 /*                   footer                    */
