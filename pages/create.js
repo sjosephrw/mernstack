@@ -81,7 +81,7 @@ function CreateProduct(){
       e.preventDefault();
       setLoading(true);
       const mediaUrl = await handleImageUpload();
-      console.log(mediaUrl);
+      // console.log(mediaUrl);
   
       const url = `${baseUrl}/api/product`;
   

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function Orders({ user, orders }) {
 
-    console.log(orders);
+    // console.log(orders);
 
     const list = [];
 
@@ -32,7 +32,7 @@ function Orders({ user, orders }) {
 //https://stackoverflow.com/questions/54867560/getinitialprops-in-next-js-does-not-get-data-from-server
 //Note: getInitialProps can not be used in children components. Only in pages.
 Orders.getInitialProps = async (ctx) => {
-  console.log(ctx);
+  // console.log(ctx);
   const { token } = parseCookies(ctx);
   if (!token) {
     return { orders: [] };
@@ -40,7 +40,7 @@ Orders.getInitialProps = async (ctx) => {
   const payload = { headers: { Authorization: token } };
   const url = `${baseUrl}/api/orders`;
   const response = await axios.get(url, payload);
-  console.log(response)
+  // console.log(response)
   return response.data;
 };
 

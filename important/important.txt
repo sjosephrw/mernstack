@@ -1,3 +1,13 @@
+NOTE: This is the first deployment in the mernstack project. It will be promoted to production.
+> NOTE: To deploy to production in the future, run `now --prod`.
+
+
+https://mernstack-6rsz74qhv.now.sh [44s]
+> Ready! Deployment complete [2m]
+- https://mernstack.now.sh
+- https://mernstack.jsrwimalasuriya.now.sh
+
+
 0+0
 0+1
 0+2

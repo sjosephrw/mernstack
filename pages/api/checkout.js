@@ -10,8 +10,8 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async (req, res) => {
     const { paymentData } = req.body;
-    // console.log('__________________________')
-    // console.log(paymentData);
+    console.log('__________________________')
+    console.log(paymentData);
 
     if (!("authorization" in req.headers)){//if the authorization object does not exist in the req.headers
         return res.status(401).send(`No authorization token.`);
@@ -64,9 +64,10 @@ export default async (req, res) => {
                     email: paymentData.email,
                     source: paymentData.id
                 })
+                customer = customer.id;
             }
 
-            console.log('-----------------------------')
+            console.log('+++++++++++++++++++++++++++++')
             console.log(customer);
             //return;
             // console.log(prevCustomer.data[0].id);

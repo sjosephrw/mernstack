@@ -51,7 +51,7 @@ function Cart({ user, products }) {
         }
     }
     const response = await axios.delete(url, payload);
-    console.log(response.data);
+    // console.log(response.data);
     setCartProducts(response.data);
 
   }
@@ -68,7 +68,7 @@ function Cart({ user, products }) {
 
         const response = await axios.post(url, payload, headers);
 
-        console.log(response.data);
+        // console.log(response.data);
         setCartProducts(response.data);
         
         setMsg({display: 'block', class: "msg msg-success", msg: "Success! payment received."});
@@ -144,7 +144,7 @@ function Cart({ user, products }) {
                 <h2 className="title" style={{marginTop: '150px'}}>CART.</h2>
                 {mapCartProducts(cartProducts)}
                 <CartSummary products={cartProducts} handleCheckout={handleCheckout} />
-                {console.log(cartProducts)}
+                {/* {console.log(cartProducts)} */}
             </section>    
         );
       }

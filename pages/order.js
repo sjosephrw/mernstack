@@ -6,7 +6,7 @@ import formatDate from '../utils/formatDate';
 
 function Order({ user, order }) {
 
-    console.log(order);
+    // console.log(order);
 
     const list = [];
 
@@ -43,7 +43,7 @@ function Order({ user, order }) {
 //https://stackoverflow.com/questions/54867560/getinitialprops-in-next-js-does-not-get-data-from-server
 //Note: getInitialProps can not be used in children components. Only in pages.
 Order.getInitialProps = async (ctx) => {
-  console.log(ctx.query);
+  // console.log(ctx.query);
   const _id = ctx.query._id;
   const { token } = parseCookies(ctx);
   if (!token) {
@@ -52,7 +52,7 @@ Order.getInitialProps = async (ctx) => {
   const payload = { headers: { Authorization: token }, params: { _id } };
   const url = `${baseUrl}/api/order`;
   const response = await axios.get(url, payload);
-  console.log(response)
+  // console.log(response)
   return {order: response.data}; 
 };
 

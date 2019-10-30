@@ -11,8 +11,8 @@ export default async (req, res) => {
 
     const search = q;
 
-    console.log(search);
-    console.log(req.query)
+    // console.log(search);
+    // console.log(req.query)
 
     const resultArray = [];
 

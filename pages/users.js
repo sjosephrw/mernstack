@@ -42,7 +42,7 @@ Users.getInitialProps = async (ctx) => {
   const payload = { headers: { Authorization: token } };
   const url = `${baseUrl}/api/users`;
   const response = await axios.get(url, payload);
-  console.log(response)
+  // console.log(response)
   return response.data;
 };
 

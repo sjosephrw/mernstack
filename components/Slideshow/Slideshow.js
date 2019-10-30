@@ -20,7 +20,7 @@ class Slideshow extends React.Component {
 
         const {slides} = this.state;
         this.setState(prevState => {return {x: prevState.x - 1}});
-        console.log(this.state.x)
+        // console.log(this.state.x)
         if (this.state.x <= 0 ){
             this.setState({x: slides.length - 1});
         }    
@@ -31,7 +31,7 @@ class Slideshow extends React.Component {
     navigateToSlideRight(){
         const {slides} = this.state;
         this.setState(prevState => {return {x: prevState.x + 1}});
-        console.log(this.state.x)
+        // console.log(this.state.x)
         if (this.state.x >= slides.length - 1 ){
             this.setState({x: 0});
         }

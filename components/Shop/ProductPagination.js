@@ -2,7 +2,7 @@ function ProductPagination({ page, totalPages }) {
   
   const currentPage = Number(page);
 
-  console.log(currentPage, totalPages);
+  // console.log(currentPage, totalPages);
   
   const prevLink = `/shop?page=${currentPage - 1}`; 
   const nextLink = `/shop?page=${currentPage + 1}`; 

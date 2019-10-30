@@ -1,6 +1,6 @@
 function SearchList({item}){
 
-    console.log(item);
+    // console.log(item);
 
     return (
         <li>

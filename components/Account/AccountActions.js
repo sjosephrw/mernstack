@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function AccountActions({user}) {
 
-  console.log(user)
+  // console.log(user)
 
     const [showPanel, setShowPanel] = useState(false);
 

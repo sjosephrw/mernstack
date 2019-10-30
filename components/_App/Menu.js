@@ -3,7 +3,7 @@ import Router from 'next/router'
 import { handleLogOut } from '../../utils/auth';
 
 const handleRouteChange = url => {
-    console.log('App is changing to: ', url)
+    // console.log('App is changing to: ', url)
   }
   
 

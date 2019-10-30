@@ -6,7 +6,7 @@ import ProductPagination from '../components/Shop/ProductPagination';
 
 function Shop({products, totalPages, page}) {
 
-  console.log(products);
+  // console.log(products);
 
   // //when ever we want to interact with the outside world we use the useEffect hook
   // React.useEffect(() => {
@@ -39,7 +39,7 @@ function Shop({products, totalPages, page}) {
    Shop.getInitialProps = async (ctx) => {
     //fetch data on the server
     // return {hello: "world"};
-    console.log(ctx.query);
+    // console.log(ctx.query);
     const page = ctx.query.page ? ctx.query.page : "1";
     const size = 9;
     const url = `${baseUrl}/api/products`;

@@ -32,8 +32,8 @@ class Search extends Component {
         console.log(res);
         this.setState({searchResult: res.data.resultArray})
         // this.setState({searchResult: res.data.resultArray});
-        console.log(res.data.resultArray);
-        console.log(this.state.searchResult);
+        // console.log(res.data.resultArray);
+        // console.log(this.state.searchResult);
 
     }
 

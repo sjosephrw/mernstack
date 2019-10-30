@@ -40,7 +40,7 @@ function Login() {
     //this was causing only the target property state to be updated not the other properties  
     //setProduct({[name]: value});
     setUser((prevState) => ({...prevState, [name]: value}));//[name] - to tell js that name is a variable and not a string
-    console.log(user);
+    // console.log(user);
   }
 
 

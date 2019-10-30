@@ -8,9 +8,9 @@ const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);   // Gen
 
 function EditProduct({prod}){
 
-    console.log(prod)
+    // console.log(prod)
     const prods = prod.product.productData;
-    console.log(prods)
+    // console.log(prods)
 
   const [MediaPreview, setMediaPreview] = useState(prods.mediaUrl);  
   const [product, setProduct] = useState(prods);
