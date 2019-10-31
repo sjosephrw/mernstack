@@ -4,3 +4,4 @@ dev-data
 dist
 next.config.*
 now.json
+config.env

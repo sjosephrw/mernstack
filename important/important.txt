@@ -1,13 +1,14 @@
 NOTE: This is the first deployment in the mernstack project. It will be promoted to production.
 > NOTE: To deploy to production in the future, run `now --prod`.
 
+https://www.youtube.com/watch?v=YNJAKLru2wY&t=290s
 
 https://mernstack-6rsz74qhv.now.sh [44s]
 > Ready! Deployment complete [2m]
 - https://mernstack.now.sh
 - https://mernstack.jsrwimalasuriya.now.sh
 
-
+//https://stackoverflow.com/questions/55479551/deploy-next-js-in-heroku
 0+0
 0+1
 0+2
@@ -38,4 +39,39 @@ https://mernstack-6rsz74qhv.now.sh [44s]
 
 7+14
 
+//////////////////////////////////////
+{
+  "name": "react-reserve",
+  "version": "1.0.0",
+  "description": "Project for MERN Stack - The Complete Guide",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "start": "next start",
+    "build": "next build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "dotenv": "^8.2.0",
+    "js-cookie": "^2.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.7",
+    "next": "^9.0.2",
+    "nookies": "^2.0.8",
+    "nprogress": "^0.2.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.1.2",
+    "react-stripe-checkout": "^2.6.3",
+    "semantic-ui-react": "^0.87.3",
+    "shortid": "^2.2.14",
+    "stripe": "^7.5.0",
+    "uuid": "^3.3.2",
+    "validator": "^11.1.0"
+  }
+}
 

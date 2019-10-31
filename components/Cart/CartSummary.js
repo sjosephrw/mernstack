@@ -30,7 +30,7 @@ function CartSummary(prods) {
           <StripeCheckout
           name="MERN STACK"
           amount={ stripeAmount }
-          image={ products.length > 0 ? products[0].product.mediaUrl : '' }
+          // image={ products.length > 0 ? products[0].product.mediaUrl : '' }
           currency="USD"
           shippingAddress={true}
           billingAddress={true}

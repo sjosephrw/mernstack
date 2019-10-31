@@ -8,7 +8,7 @@ class Slideshow extends React.Component {
         this.state = {
             x: 0,
             slides: [
-                {heading: 'Heading 1', description: 'Paragraph 1'}, 
+                {heading: 'MERN', description: 'MERN Stack Project'}, 
                 {heading: 'Heading 2', description: 'Paragraph 2'}
             ]
         }
