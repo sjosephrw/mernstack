@@ -586,13 +586,14 @@ nav a {
 
 .pagination li {
   display: inline-block;
+  margin-right: 5px;
 }
 
 
 .pagination li a {
   display: inline-block;
   text-decoration: none;
-  padding: 5px;
+  padding: 10px;
   border: 1px solid #91ce89;
   color: green;
 }

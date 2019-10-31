@@ -4,9 +4,10 @@ function Welcome(){
         <section className="section-welcome">
         <div className="container">
             
-            <h2 className="title">WELCOME.</h2>
-            <p className="p-welcome">
-                Living valley had silent eat merits esteem bed. In last an or went wise as left. Visited civilly am demesne so colonel he calling. So unreserved do interested increasing sentiments. Vanity day giving points within six not law. Few impression difficulty his use has comparison decisively. 
+            <h2 className="title" style={{marginTop: '80px'}}>WELCOME.</h2>
+            <p className="p-welcome" style={{marginBottom: '80px'}}>
+                This is a test project I created for a fictitious restaurant, the App is a fullstack JavaScript app, built using the MERN Stack, it features a an Inventory Control system (for managing products), it has user Sign In and Sign Up systems, a User management system, a shopping cart for logged in users, Checkout with the Stripe payment gateway, I built it with the knowledge I gathered by following a MERN stack developer course I found online. 
+
             </p>
             
         </div>
